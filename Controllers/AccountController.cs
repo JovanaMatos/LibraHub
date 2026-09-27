@@ -44,7 +44,7 @@ namespace LibraHub.Controllers
                 }
             }
 
-            this.ModelState.AddModelError(string.Empty, "Failed to login");
+            this.ModelState.AddModelError(string.Empty, "Falha ao iniciar sessão.");
             return View(model);
         }
 
@@ -85,7 +85,7 @@ namespace LibraHub.Controllers
 
                     if (result != Microsoft.AspNetCore.Identity.IdentityResult.Success)
                     {
-                        ModelState.AddModelError(string.Empty, "The user couldn't be created.");
+                        ModelState.AddModelError(string.Empty, "Não foi possível criar o utilizador.");
                         return View(model);
                     }
 
@@ -105,11 +105,11 @@ namespace LibraHub.Controllers
                         return RedirectToAction("Index", "Home");
                     }
 
-                    ModelState.AddModelError(string.Empty, "The user couldn't be logged in.");
+                    ModelState.AddModelError(string.Empty, "Não foi possível iniciar sessão.");
                     return View(model);
                 }
 
-                ModelState.AddModelError(string.Empty, "The user already exists.");
+                ModelState.AddModelError(string.Empty, "O utilizador já existe.");
                 return View(model);
             }
 
@@ -149,7 +149,7 @@ namespace LibraHub.Controllers
 
                     if (response.Succeeded)
                     {
-                        ViewBag.UserMessage = "User updated!";
+                        ViewBag.UserMessage = "Utilizador atualizado!";
                     }
                     else
                     {
@@ -159,7 +159,7 @@ namespace LibraHub.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "User not found.");
+                    ModelState.AddModelError(string.Empty, "Utilizador não encontrado.");
                 }
             }
 
@@ -196,7 +196,7 @@ namespace LibraHub.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "User not found.");
+                    ModelState.AddModelError(string.Empty, "Utilizador não encontrado.");
                 }
             }
 

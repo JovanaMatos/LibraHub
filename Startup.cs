@@ -41,6 +41,8 @@ namespace LibraHub
 
             services.AddScoped<IUserHelper, UserHelper>();
 
+            services.AddScoped<IGenreRepository, GenreRepository>();
+
             services.AddTransient<SeedDb>();
 
             services.ConfigureApplicationCookie(options =>

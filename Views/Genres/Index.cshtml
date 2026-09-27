@@ -1,0 +1,51 @@
+@model IEnumerable<LibraHub.Data.Entities.Genre>
+
+@{
+    ViewData["Title"] = "Géneros";
+}
+
+<h2>Géneros</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Criar Novo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Criado por
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.User != null)
+                    {
+                        @item.User.FullName
+                    }
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">
+                        <i class="fas fa-info-circle"></i> Detalhes
+                    </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
+                        <i class="fas fa-trash-alt"></i> Apagar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -9,5 +9,7 @@ namespace LibraHub.Data.Entities
         [Required]
         [MaxLength(50, ErrorMessage = "O campo {0} pode conter {1} caracteres.")]
         public string Name { get; set; }
+
+        public User User { get; set; }
     }
 }

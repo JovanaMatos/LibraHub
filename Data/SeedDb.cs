@@ -24,7 +24,7 @@ namespace LibraHub.Data
             await _userHelper.CheckRoleAsync("Admin");
             await _userHelper.CheckRoleAsync("Reader");
 
-            var user = await _userHelper.GetUserByEmailAsync("jovanamatos22@gmail.com");
+            var user = await _userHelper.GetUserByEmailAsync("admin@gmail.com");
 
             if (user == null)
             {
@@ -32,8 +32,8 @@ namespace LibraHub.Data
                 {
                     FirstName = "Jovana",
                     LastName = "Matos",
-                    UserName = "jovanamatos22@gmail.com",
-                    Email = "jovanamatos22@gmail.com"
+                    UserName = "admin@gmail.com",
+                    Email = "admin@gmail.com"
                 };
 
                 var result = await _userHelper.AddUserAsync(
