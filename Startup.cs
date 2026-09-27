@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LibraHub.Data;
 using LibraHub.Data.Entities;
+using LibraHub.Helpers;
+
 namespace LibraHub
 {
     public class Startup
@@ -36,6 +38,8 @@ namespace LibraHub
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddScoped<IUserHelper, UserHelper>();
 
             services.AddTransient<SeedDb>();
 

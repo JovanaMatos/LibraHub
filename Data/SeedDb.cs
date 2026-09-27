@@ -1,42 +1,30 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LibraHub.Data.Entities;
+using LibraHub.Helpers;
 
 namespace LibraHub.Data
 {
     public class SeedDb
     {
         private readonly DataContext _context;
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUserHelper _userHelper;
 
-        public SeedDb(
-            DataContext context,
-            UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager)
+        public SeedDb(DataContext context, IUserHelper userHelper)
         {
             _context = context;
-            _userManager = userManager;
-            _roleManager = roleManager;
+            _userHelper = userHelper;
         }
 
         public async Task SeedAsync()
         {
             await _context.Database.MigrateAsync();
 
-            if (!await _roleManager.RoleExistsAsync("Admin"))
-            {
-                await _roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
-            }
+            await _userHelper.CheckRoleAsync("Admin");
+            await _userHelper.CheckRoleAsync("Reader");
 
-            if (!await _roleManager.RoleExistsAsync("Reader"))
-            {
-                await _roleManager.CreateAsync(new IdentityRole { Name = "Reader" });
-            }
-
-            var user = await _userManager.FindByEmailAsync("jovanamatos22@gmail.com");
+            var user = await _userHelper.GetUserByEmailAsync("jovanamatos22@gmail.com");
 
             if (user == null)
             {
@@ -48,8 +36,10 @@ namespace LibraHub.Data
                     Email = "jovanamatos22@gmail.com"
                 };
 
-                var result = await _userManager.CreateAsync(user, "123456");
-
+                var result = await _userHelper.AddUserAsync(
+                    user,
+                    "123456"
+                );
                 if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
@@ -60,14 +50,14 @@ namespace LibraHub.Data
                     }
                 }
 
-                await _userManager.AddToRoleAsync(user, "Admin");
+                await _userHelper.AddUserToRoleAsync(user, "Admin");
             }
 
-            var isInRole = await _userManager.IsInRoleAsync(user, "Admin");
+            var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
 
             if (!isInRole)
             {
-                await _userManager.AddToRoleAsync(user, "Admin");
+                await _userHelper.AddUserToRoleAsync(user, "Admin");
             }
         }
     }
