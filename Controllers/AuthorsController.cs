@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using LibraHub.Data;
 using LibraHub.Helpers;
 using LibraHub.Models;
@@ -168,8 +169,22 @@ namespace LibraHub.Controllers
                 return NotFound();
             }
 
-            await _repository.DeleteAsync(author);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _repository.DeleteAsync(author);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("DELETE"))
+                {
+                    ViewBag.ErrorTitle = $"{author.FullName} provavelmente está a ser usado.";
+                    ViewBag.ErrorMessage = $"{author.FullName} não pode ser apagado porque existem livros que o utilizam.<br/>" +
+                        $"Experimente primeiro apagar todos os livros que o estão a usar e torne novamente a apagá-lo.";
+                }
+
+                return View("Error");
+            }
         }
     }
 }

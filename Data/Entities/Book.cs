@@ -10,9 +10,6 @@ namespace LibraHub.Data.Entities
         [MaxLength(100, ErrorMessage = "O campo {0} pode conter {1} caracteres.")]
         public string Title { get; set; }
 
-        [MaxLength(20, ErrorMessage = "O campo {0} pode conter {1} caracteres.")]
-        public string ISBN { get; set; }
-
         [Display(Name = "Author")]
         public int AuthorId { get; set; }
 

@@ -28,5 +28,33 @@ namespace LibraHub.Helpers
                 User = author.User
             };
         }
+
+        public Book ToBook(BookViewModel model, string path, bool isNew)
+        {
+            return new Book
+            {
+                Id = isNew ? 0 : model.Id,
+                Title = model.Title,
+                AuthorId = model.AuthorId,
+                GenreId = model.GenreId,
+                ImageUrl = path,
+                Stock = model.Stock,
+                User = model.User
+            };
+        }
+
+        public BookViewModel ToBookViewModel(Book book)
+        {
+            return new BookViewModel
+            {
+                Id = book.Id,
+                Title = book.Title,
+                AuthorId = book.AuthorId,
+                GenreId = book.GenreId,
+                ImageUrl = book.ImageUrl,
+                Stock = book.Stock,
+                User = book.User
+            };
+        }
     }
 }

@@ -49,6 +49,8 @@ namespace LibraHub
 
             services.AddScoped<IConverterHelper, ConverterHelper>();
 
+            services.AddScoped<IBookRepository, BookRepository>();
+
             services.AddTransient<SeedDb>();
 
             services.ConfigureApplicationCookie(options =>

@@ -1,0 +1,74 @@
+@model IEnumerable<LibraHub.Data.Entities.Book>
+
+@{
+    ViewData["Title"] = "Livros";
+}
+
+<h2>Livros</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Criar Novo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>Stock</th>
+            <th>Criado por</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@Url.Content(item.ImageUrl)"
+                             alt="@item.Title"
+                             style="width:80px;max-width:100%;height:auto;" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @if (item.Author != null)
+                    {
+                        @item.Author.FullName
+                    }
+                </td>
+                <td>
+                    @if (item.Genre != null)
+                    {
+                        @item.Genre.Name
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>
+                    @if (item.User != null)
+                    {
+                        @item.User.FullName
+                    }
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">
+                        <i class="fas fa-info-circle"></i> Detalhes
+                    </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
+                        <i class="fas fa-trash-alt"></i> Apagar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
