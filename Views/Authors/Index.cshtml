@@ -1,0 +1,60 @@
+@model IEnumerable<LibraHub.Data.Entities.Author>
+
+@{
+    ViewData["Title"] = "Autores";
+}
+
+<h2>Autores</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Criar Novo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>Primeiro Nome</th>
+            <th>Último Nome</th>
+            <th>Criado por</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@Url.Content(item.ImageUrl)"
+                             alt="@item.FullName"
+                             style="width:80px;max-width:100%;height:auto;" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @if (item.User != null)
+                    {
+                        @item.User.FullName
+                    }
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">
+                        <i class="fas fa-info-circle"></i> Detalhes
+                    </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
+                        <i class="fas fa-trash-alt"></i> Apagar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

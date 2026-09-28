@@ -43,6 +43,12 @@ namespace LibraHub
 
             services.AddScoped<IGenreRepository, GenreRepository>();
 
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+
+            services.AddScoped<IImageHelper, ImageHelper>();
+
+            services.AddScoped<IConverterHelper, ConverterHelper>();
+
             services.AddTransient<SeedDb>();
 
             services.ConfigureApplicationCookie(options =>

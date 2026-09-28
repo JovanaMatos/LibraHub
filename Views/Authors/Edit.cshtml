@@ -1,0 +1,49 @@
+@model LibraHub.Models.AuthorViewModel
+
+@{
+    ViewData["Title"] = "Editar Autor";
+}
+
+<h2>Editar Autor</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ImageUrl" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label">Primeiro Nome</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label">Último Nome</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Url.Content(Model.ImageUrl)"
+                         alt="@Model.FullName"
+                         style="width:150px;max-width:100%;height:auto;" />
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label">Imagem</label>
+                <input asp-for="ImageFile" class="form-control" type="file" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary" asp-action="Index">
+        <i class="fas fa-arrow-left"></i> Voltar à Lista
+    </a>
+</div>
