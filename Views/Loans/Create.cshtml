@@ -1,0 +1,39 @@
+@model LibraHub.Models.LoanViewModel
+
+@{
+    ViewData["Title"] = "Criar Empréstimo";
+}
+
+<h2>Criar Empréstimo</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BookId" />
+            <div class="form-group">
+                <label class="control-label">Livro</label>
+                <input type="text" class="form-control" value="@Model.BookTitle" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="LoanDate" class="control-label">Data de Empréstimo</label>
+                <input asp-for="LoanDate" class="form-control" type="date" />
+                <span asp-validation-for="LoanDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DueDate" class="control-label">Data de Devolução Prevista</label>
+                <input asp-for="DueDate" class="form-control" type="date" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Confirmar Empréstimo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary" asp-action="Index">
+        <i class="fas fa-arrow-left"></i> Voltar à Lista
+    </a>
+</div>

@@ -1,14 +1,18 @@
 @model IEnumerable<LibraHub.Data.Entities.Book>
 
 @{
-    ViewData["Title"] = "Livros";
+    ViewData["Title"] = "Empréstimos";
 }
 
-<h2>Livros</h2>
+<h2>Empréstimos</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Criar Novo</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="ActiveLoans" class="btn btn-info"><i class="fas fa-list"></i> Ver Empréstimos Ativos</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -16,8 +20,7 @@
             <th>Título</th>
             <th>Autor</th>
             <th>Género</th>
-            <th>Stock</th>
-            <th>Criado por</th>
+            <th>Disponibilidade</th>
             <th></th>
         </tr>
     </thead>
@@ -30,7 +33,7 @@
                     {
                         <img src="@Url.Content(item.ImageUrl)"
                              alt="@item.Title"
-                             style="width:80px;max-width:100%;height:auto;" />
+                             style="width:60px;max-width:100%;height:auto;" />
                     }
                 </td>
                 <td>
@@ -49,24 +52,28 @@
                     }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    @if (item.User != null)
+                    @if (item.Stock > 0)
                     {
-                        @item.User.FullName
+                        <span class="badge badge-success">@item.Stock disponível(is)</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Indisponível</span>
                     }
                 </td>
-                <td class="text-right" style="white-space:nowrap;">
-                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">
-                        <i class="fas fa-edit"></i> Editar
-                    </a>
-                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">
-                        <i class="fas fa-info-circle"></i> Detalhes
-                    </a>
-                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">
-                        <i class="fas fa-trash-alt"></i> Apagar
-                    </a>
+                <td class="text-right">
+                    @if (item.Stock > 0)
+                    {
+                        <a class="btn btn-primary" asp-action="Create" asp-route-bookId="@item.Id">
+                            <i class="fas fa-book"></i> Emprestar
+                        </a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary" disabled>
+                            <i class="fas fa-book"></i> Emprestar
+                        </button>
+                    }
                 </td>
             </tr>
         }

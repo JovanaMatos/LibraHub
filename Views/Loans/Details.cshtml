@@ -1,0 +1,70 @@
+@model LibraHub.Data.Entities.Loan
+
+@{
+    ViewData["Title"] = "Detalhes do Empréstimo";
+}
+
+<h2>Detalhes do Empréstimo</h2>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Livro</dt>
+        <dd class="col-sm-9">
+            @if (Model.Book != null)
+            {
+                @Model.Book.Title
+            }
+        </dd>
+
+        <dt class="col-sm-3">Registado por</dt>
+        <dd class="col-sm-9">
+            @if (Model.User != null)
+            {
+                @Model.User.FullName
+            }
+        </dd>
+
+        <dt class="col-sm-3">Data de Empréstimo</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.LoanDate)</dd>
+
+        <dt class="col-sm-3">Data de Devolução Prevista</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.DueDate)</dd>
+
+        <dt class="col-sm-3">Data de Devolução</dt>
+        <dd class="col-sm-9">
+            @if (Model.ReturnDate.HasValue)
+            {
+                @Html.DisplayFor(model => model.ReturnDate)
+            }
+            else
+            {
+                <span>Ainda não devolvido</span>
+            }
+        </dd>
+
+        <dt class="col-sm-3">Estado</dt>
+        <dd class="col-sm-9">
+            @if (Model.ReturnDate.HasValue)
+            {
+                <span class="badge badge-success">Devolvido</span>
+            }
+            else if (Model.DueDate < DateTime.Now)
+            {
+                <span class="badge badge-danger">Atrasado</span>
+            }
+            else
+            {
+                <span class="badge badge-warning">Ativo</span>
+            }
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">
+        <i class="fas fa-edit"></i> Editar
+    </a>
+    <a class="btn btn-secondary" asp-action="Index">
+        <i class="fas fa-arrow-left"></i> Voltar à Lista
+    </a>
+</div>

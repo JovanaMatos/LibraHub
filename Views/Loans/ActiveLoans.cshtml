@@ -1,0 +1,85 @@
+@model IEnumerable<LibraHub.Data.Entities.Loan>
+
+@{
+    ViewData["Title"] = "Empréstimos Ativos";
+}
+
+<h2>Empréstimos Ativos</h2>
+
+<p>
+    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar aos Livros</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Livro</th>
+            <th>Registado por</th>
+            <th>Data de Empréstimo</th>
+            <th>Data de Devolução Prevista</th>
+            <th>Data de Devolução</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.Book != null)
+                    {
+                        @item.Book.Title
+                    }
+                </td>
+                <td>
+                    @if (item.User != null)
+                    {
+                        @item.User.FullName
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoanDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @if (item.ReturnDate.HasValue)
+                    {
+                        @Html.DisplayFor(modelItem => item.ReturnDate)
+                    }
+                    else
+                    {
+                        <span>-</span>
+                    }
+                </td>
+                <td>
+                    @if (item.ReturnDate.HasValue)
+                    {
+                        <span class="badge badge-success">Devolvido</span>
+                    }
+                    else if (item.DueDate < DateTime.Now)
+                    {
+                        <span class="badge badge-danger">Atrasado</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-warning">Ativo</span>
+                    }
+                </td>
+                <td class="text-right" style="white-space:nowrap;">
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">
+                        <i class="fas fa-info-circle"></i> Detalhes
+                    </a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">
+                        <i class="fas fa-trash-alt"></i> Apagar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

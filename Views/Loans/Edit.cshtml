@@ -1,0 +1,41 @@
+@model LibraHub.Models.LoanViewModel
+
+@{
+    ViewData["Title"] = "Editar Empréstimo";
+}
+
+<h2>Editar Empréstimo</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="BookId" />
+            <div class="form-group">
+                <label asp-for="LoanDate" class="control-label">Data de Empréstimo</label>
+                <input asp-for="LoanDate" class="form-control" type="date" />
+                <span asp-validation-for="LoanDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DueDate" class="control-label">Data de Devolução Prevista</label>
+                <input asp-for="DueDate" class="form-control" type="date" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReturnDate" class="control-label">Data de Devolução</label>
+                <input asp-for="ReturnDate" class="form-control" type="date" />
+                <span asp-validation-for="ReturnDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary" asp-action="ActiveLoans">
+        <i class="fas fa-arrow-left"></i> Voltar à Lista
+    </a>
+</div>
