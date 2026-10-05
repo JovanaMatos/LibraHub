@@ -61,20 +61,23 @@
                         <span class="badge badge-danger">Indisponível</span>
                     }
                 </td>
-                <td class="text-right">
-                    @if (item.Stock > 0)
-                    {
-                        <a class="btn btn-primary" asp-action="Create" asp-route-bookId="@item.Id">
-                            <i class="fas fa-book"></i> Emprestar
-                        </a>
-                    }
-                    else
-                    {
-                        <button class="btn btn-primary" disabled>
-                            <i class="fas fa-book"></i> Emprestar
-                        </button>
-                    }
-                </td>
+                @if (!User.IsInRole("Admin"))
+                {
+                    <td class="text-right">
+                        @if (item.Stock > 0)
+                        {
+                            <a class="btn btn-primary" asp-action="Create" asp-route-bookId="@item.Id">
+                                <i class="fas fa-book"></i> Emprestar
+                            </a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary" disabled>
+                                <i class="fas fa-book"></i> Emprestar
+                            </button>
+                        }
+                    </td>
+                }
             </tr>
         }
     </tbody>
